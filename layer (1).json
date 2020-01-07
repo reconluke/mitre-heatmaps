@@ -1,0 +1,131 @@
+{
+	"name": "layer",
+	"version": "2.2",
+	"domain": "mitre-enterprise",
+	"description": "",
+	"filters": {
+		"stages": [
+			"act"
+		],
+		"platforms": [
+			"Windows",
+			"Linux",
+			"macOS"
+		]
+	},
+	"sorting": 0,
+	"viewMode": 0,
+	"hideDisabled": false,
+	"techniques": [
+		{
+			"techniqueID": "T1003",
+			"tactic": "credential-access",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Manage the access control list for \"Replicating Directory Changes\" and other permissions associated with domain controller replication.\n\n * Consider disabling or restricting NTLM.\n\n * Ensure that local administrator accounts have complex, unique passwords across all systems on the network.\n\n * Limit credential overlap across accounts and systems by training users and administrators not to use the same password for multiple accounts.\n\n\nDetection\n\n * Windows: Monitor for unexpected processes interacting with Isass.exe.\n\n * Linux: The AuditD monitoring tool can be used to watch for hostile processes opening a maps file in the proc file system, alerting on the pid, process name, and arguments for such programs.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1002",
+			"tactic": "exfiltration",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Network intrusion prevention or data loss prevention tools may be set to block specific file types from leaving the network over unencrypted channels.\n\n\nDetection\n\n * Process monitoring and monitoring for command-line arguments for known compression utilities.\n\n * If the communications channel is unencrypted, compressed files can be detected in transit during exfiltration with a network intrusion detection or data loss prevention system analyzing file headers.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1027",
+			"tactic": "defense-evasion",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Consider utilizing the Antimalware Scan Interface (AMSI) on Windows 10 to analyze commands after being processed/interpreted.\n\n\nDetection\n\n * Windows: Monitor for unexpected processes interacting with Isass.exe.\n\n * Linux: The AuditD monitoring tool can be used to watch for hostile processes opening a maps file in the proc file system, alerting on the pid, process name, and arguments for such programs.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1086",
+			"tactic": "execution",
+			"color": "#6baed6",
+			"comment": "\t\nMitigation\n\n * Set PowerShell execution policy to execute only signed scripts.\n\n * Remove PowerShell from systems when not needed, but a review should be performed to assess the impact to an environment, since it could be in use for many legitimate purposes and administrative functions.\n\n * Disable/restrict the WinRM Service to help prevent uses of PowerShell for remote execution.\n\n * Restrict PowerShell execution policy to administrators.\n\n\nDetection\n\n * If PowerShell is not used in an environment, looking for PowerShell execution may detect malicious activity.\n\n * Monitor for loading and/or execution of artifacts associated with PowerShell specific assemblies, such as System. Management.Automation.dll (especially to unusual process names/locations).\n\n * Turn on PowerShell logging to gain increased fidelity in what occurs during execution (which is applied to .NET invocations).",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1060",
+			"tactic": "persistence",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * This type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of system features.\n\n\nDetection\n\n * Monitor Registry for changes to run keys that do not correlate with known software, patch cycles, etc.\n\n * Monitor the start folder for additions or changes.\n\n * Tools such as Sysinternals Autoruns may also be used to detect system changes that could be attempts at persistence, including listing the run keys' Registry locations and startup folders.\n\n * To increase confidence of malicious activity, data and events should not be viewed in isolation, but as part of a chain of behavior that could lead to other activities, such as network connections made for Command and Control, learning details about the environment through Discovery, and Lateral Movement.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1105",
+			"tactic": "command-and-control",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Network intrusion detection and prevention systems that use network signatures to identify traffic for specific adversary malware or unusual data transfer over known tools and protocols like FTP can be used to mitigate activity at the network level.\n\n\nDetection\n\n * Monitor for file creation and files transferred within a network over SMB.\n\n * Monitor use of utilities, such as FTP, that does not normally occur.\n\n * Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server).\n\n * Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1105",
+			"tactic": "lateral-movement",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Network intrusion detection and prevention systems that use network signatures to identify traffic for specific adversary malware or unusual data transfer over known tools and protocols like FTP can be used to mitigate activity at the network level.\n\n\nDetection\n\n * Monitor for file creation and files transferred within a network over SMB.\n\n * Monitor use of utilities, such as FTP, that does not normally occur.\n\n * Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server).\n\n * Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1064",
+			"tactic": "defense-evasion",
+			"color": "#6baed6",
+			"comment": "\t\nMitigation\n\n * Configure Office security settings enable Protected View, to execute within a sandbox environment, and to block macros through Group Policy. Other types of virtualization and application microsegmentation may also mitigate the impact of compromise.\n\n * Turn off unused features or restrict access to scripting engines such as VBScript or scriptable administration frameworks such as PowerShell.\n\n\nDetection\n \n * Examine scripting user restrictions. Evaluate any attempts to enable scripts running on a system that would be considered suspicious.\n\n * Scripts should be captured from the file system when possible to determine their actions and intent.\n\n * Monitor processes and command-line arguments for script execution and subsequent behavior.\n\n * Analyze Office file attachments for potentially malicious macros.\nOffice processes, such as winword.exe, spawning instances of cmd.exe, script application like wscript.exe or powershell.exe, or other suspicious processes may indicate malicious activity.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1064",
+			"tactic": "execution",
+			"color": "#6baed6",
+			"comment": "\t\nMitigation\n\n * Configure Office security settings enable Protected View, to execute within a sandbox environment, and to block macros through Group Policy. Other types of virtualization and application microsegmentation may also mitigate the impact of compromise.\n\n * Turn off unused features or restrict access to scripting engines such as VBScript or scriptable administration frameworks such as PowerShell.\n\n\nDetection\n \n * Examine scripting user restrictions. Evaluate any attempts to enable scripts running on a system that would be considered suspicious.\n\n * Scripts should be captured from the file system when possible to determine their actions and intent.\n\n * Monitor processes and command-line arguments for script execution and subsequent behavior.\n\n * Analyze Office file attachments for potentially malicious macros.\nOffice processes, such as winword.exe, spawning instances of cmd.exe, script application like wscript.exe or powershell.exe, or other suspicious processes may indicate malicious activity.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1193",
+			"tactic": "initial-access",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Anti-virus can automatically quarantine suspicious files.\n\n * Network intrusion prevention systems and systems designed to scan and remove malicious email attachments can be used to block activity.\n\n * Block unknown or unused attachments by default that should not be transmitted over email as a best practice to prevent some vectors, such as .scr, .exe, .pif, .cpl, etc.\n\n * Some email scanning devices can open and analyze compressed and encrypted formats, such as zip and rar that may be used to conceal malicious attachments in Obfuscated Files or Information.\n\n * Users can be trained to identify social engineering techniques and spearphishing emails.\n\n\nDetection\n\n * Network intrusion detection systems and email gateways can be used to detect spearphishing with malicious attachments in transit.\n\n * Detonation chambers may also be used to identify malicious attachments.\n\n * Solutions can be signature and behavior based, but adversaries may construct attachments in a way to avoid these systems.\n\n * Anti-virus can potentially detect malicious documents and attachments as they're scanned to be stored on the email server or on the user's computer.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1192",
+			"tactic": "initial-access",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Determine if certain websites that can be used for spearphishing are necessary for business operations and consider blocking access if activity cannot be monitored well or if it poses a significant risk.\n\n * Users can be trained to identify social engineering techniques and spearphishing emails with malicious links.\n\n\nDetection\n\n * URL inspection within email (including expanding shortened links) can help detect links leading to known malicious sites.\n\n * Detonation chambers can be used to detect these links and either automatically go to these sites to determine if they're potentially malicious, or wait and capture the content if a user visits the link.",
+			"enabled": true,
+			"metadata": []
+		},
+		{
+			"techniqueID": "T1204",
+			"tactic": "execution",
+			"color": "#6baed6",
+			"comment": "Mitigation\n\n * Application whitelisting may be able to prevent the running of executables masquerading as other files.\n\n * If a link is being visited by a user, network intrusion prevention systems and systems designed to scan and remove malicious downloads can be used to block activity.\n\n * Block unknown or unused files in transit by default that should not be downloaded or by policy from suspicious sites as a best practice to prevent some vectors, such as .scr., .exe, .pif, .cpl, etc.\n\n * Use user training as a way to bring awareness to common phishing and spearphishing techniques and how to raise suspicion for potentially malicious events.\n\n\nDetection\n\n * Monitor the execution of and command-line arguments for applications that may be used by an adversary to gain Initial Access that require user interaction. This includes compression applications, such as those for zip files that can be used to Deobfuscate/Decode Files or Information in payloads.\n\n * Anti-virus can potentially detect malicious documents and files that are downloaded and executed on the user's computer.\n\n * Endpoint sensing or network sensing can potentially detect malicious events once the file is opened (such as a Microsoft Word document or PDF reaching out to the internet or spawning Powershell.exe) for techniques such as Exploitation for Client Execution and Scripting.",
+			"enabled": true,
+			"metadata": []
+		}
+	],
+	"gradient": {
+		"colors": [
+			"#ff6666",
+			"#ffe766",
+			"#8ec843"
+		],
+		"minValue": 0,
+		"maxValue": 100
+	},
+	"legendItems": [],
+	"metadata": [],
+	"showTacticRowBackground": false,
+	"tacticRowBackground": "#dddddd",
+	"selectTechniquesAcrossTactics": true
+}
